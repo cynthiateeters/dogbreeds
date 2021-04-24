@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unsplash Photo Search</title>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+
+      img {
+        max-width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Dog Breeds</h1>
+
+    <div class="breeds"></div>
+
+    <script>
+      const divBreeds = document.querySelector('.breeds')
+      const resp = await fetch('/.netlify/functions/dog')
+        .then((res) => res.json())
+        .catch((err) => console.error(err));
+
+      if (resp.status === 200) {
+        console.log(`Got ${Object.entries(resp.data.message).length} breeds`);
+        divBreeds.innerText = `Got ${Object.entries(resp.data.message).length} breeds`;
+      } else {
+        console.log(`Request failed. Error: ${resp.status}`);
+      }
+
+    </script>
+  </body>
+</html>
